@@ -1,5 +1,5 @@
 {
-  "name": "http-demo",
+  "name": "http-demos",
   "version": "1.0.0",
   "description": "Demos for HTTP features",
   "main": "src/index.js",
