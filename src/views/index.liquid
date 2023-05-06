@@ -1,5 +1,11 @@
 {% layout "layout.liquid" %}
 
+{% block head %}
+{% endblock %}
+
 {% block body %}
-  Documentation: <a href="https://github.com/harttle/http-demo">github.com/harttle/http-demo</a>
+<div class="markdown-body">
+  {{content}}
+</div>
+<p>Github: <a href="https://github.com/harttle/http-demo">github.com/harttle/http-demo</a></p>
 {% endblock %}

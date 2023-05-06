@@ -1,0 +1,67 @@
+{% layout "layout.liquid" %}
+
+{% block head %}
+<link rel="stylesheet" href="/public/stylesheets/dom-content-loaded.css">
+{% endblock %}
+
+{% block body %}
+<h1>DOMContentLoaded event</h1>
+<p>The DOMContentLoaded event fires when the HTML document has been completely parsed, and all deferred scripts (<code>&lt;script defer src="…"&gt; and &lt;script type="module"&gt;</code>) have downloaded and executed. It doesn't wait for other things like images, subframes, and async scripts to finish loading.</p>
+<p>This is the "DOM ready" event and what jQuery <code>ready</code> event based on.</p>
+
+<h2>Source Code</h2>
+<p>Current HTML:</p>
+<pre><code>&lt;script&gt;
+logBegin("inline script");
+window.addEventListener("DOMContentLoaded", () =&lt; log("DOMContentLoaded triggered"));
+log("DOMContentLoaded event handler registered");
+logEnd("inline script end");
+&lt;/script&gt;
+&lt;script src="/public/scripts/dom-content-loaded-external.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<p>/public/scripts/dom-content-loaded-external.js:</p>
+<pre><code>logBegin("external script");
+
+const script = document.createElement("script");
+script.innerHTML = "log('inline script appended by external script')";
+document.head.appendChild(script);
+
+const exScript = document.createElement("script");
+exScript.src = "/public/scripts/dom-content-loaded-external-dynamic.js";
+document.head.appendChild(exScript)
+
+logEnd("external script end")</code></pre>
+
+<p>/public/scripts/dom-content-loaded-external-dynamic.js:</p>
+<pre><code>log('external script appended by external script');</code></pre>
+
+<h2>Console</h2>
+<pre><code id="uiconsole"></code></pre>
+
+<script>
+  let indent = 0;
+  window.log = (...args) => {
+    const prefix = '    '.repeat(indent);
+    const message = prefix + args.join(" ");
+    console.log(message);
+    uiconsole.innerHTML += message + "\n";
+  };
+  window.logBegin = (...args) => {
+    window.log(...args);
+    indent++;
+  };
+  window.logEnd = (...args) => {
+    indent--;
+    window.log(...args);
+  };
+</script>
+<script>
+  logBegin("inline script");
+  window.addEventListener("DOMContentLoaded", () => log("DOMContentLoaded triggered"));
+  log("DOMContentLoaded event handler registered");
+  logEnd("inline script end");
+</script>
+
+<script src="/public/scripts/dom-content-loaded-external.js"></script>
+{% endblock %}
