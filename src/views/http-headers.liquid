@@ -1,0 +1,13 @@
+<table class="http-headers">
+<thead>
+<tr><th>Field</th><th>Value</th></tr>
+</thead>
+<tbody>
+{% for header in headers %}
+<tr {% if header[0] == highlightRow %}class="highlight"{% endif %}>
+    <td>{{header[0]}}</td>
+    <td><code>{{header[1]}}</code></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>

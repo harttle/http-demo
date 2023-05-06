@@ -1,26 +1,29 @@
 {% layout "layout.liquid" %}
 
 {% block head %}
-<link rel="stylesheet" href="/public/stylesheets/client-hints.css">
+<link rel="stylesheet" href="/public/stylesheets/http-headers.css">
+<style>
+img {
+    width: 100%;
+    margin-top: 16px;
+}
+</style>
 {% endblock %}
 
 {% block body %}
 <h1>Client Hints</h1>
-
-<h2>Request Headers</h2>
-<pre><code>{{ requestHeaders | json }}</code></pre>
-
-<h2>Response Headers</h2>
-<pre><code>{{ responseHeaders | json }}</code></pre>
-
-<h2>Notes</h2>
-<p>There's a <code>Accept-CH</code> response header set for this page. aResources on this page and subsequent navigation request will include specified <code>sec-ch-*</code> headers. Steps to check:</p>
+<p>There's a <code>Accept-CH</code> response header set for this page. Resources on this page and subsequent top-level request (e.g. page refresh) will include the specified <code>sec-ch-viewport-width</code> header. Steps to check:</p>
 
 <ol>
   <li>Open DevTools and switch to Network tag.</li>
-  <li>Click <code>client-hints.css</code> and <code>mountain.webp</code>, there should be additional <code>sec-ch-*</code> request headers set.</li>
+  <li>Click <code>http-headers.css</code> and <code>mountain.webp</code>, there should be additional <code>sec-ch-*</code> request headers set.</li>
   <li>Refresh the page, click <code>/client-hints</code>, this top-level request will also include these headers.</li>
 </ol>
+
+<h2>Request Headers</h2>
+{% render "http-headers.liquid" highlightRow:"sec-ch-viewport-width" headers:requestHeaders %}
+<h2>Response Headers</h2>
+{% render "http-headers.liquid" highlightRow:"accept-ch" headers:responseHeaders %}
 
 <img src="/public/images/mountain.webp">
 {% endblock %}

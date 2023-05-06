@@ -1,0 +1,17 @@
+.http-headers {
+    width: 100%;
+}
+.http-headers th {
+    text-align: initial;
+}
+table.http-headers, .http-headers th, .http-headers td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    word-break: break-all;
+}
+.http-headers .highlight {
+    color: red;
+}
+.http-headers th:first-child, .http-headers td:first-child {
+    width: 160px;
+}
